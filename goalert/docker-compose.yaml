@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: goalert
+      POSTGRES_USER: goalert
+      POSTGRES_PASSWORD: lh1nd
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  goalert:
+    image: goalert/goalert
+    environment:
+      GOALERT_DB_URL: postgres://goalert:lh1nd@postgres/goalert
+      GOALERT_DATA_ENCRYPTION_KEY: super-awesome-secret-key
+    depends_on:
+      - postgres
+    ports:
+      - 8081:8081 

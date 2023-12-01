@@ -1,0 +1,25 @@
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus:/etc/prometheus
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - alertmanager:/etc/alertmanager
+volumes:
+  prometheus:
+      driver: local
+      driver_opts:
+        type: none
+        device: /etc/monitoring/prometheus
+  alertmanager:
+      driver: local
+      driver_opts:
+        type: none
+        device: /etc/monitoring/alertmanager
